@@ -3,7 +3,7 @@
     "@openapitools/openapi-generator-cli": "^2.1.18"
   },
   "name": "ezmax-api-typescript-axios",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A eZmax generated API with OpenAPI and Typescript / Axios",
   "main": "index.ts",
   "repository": "git@github.com:webpape/ezmax-api-typescript-axios.git",
