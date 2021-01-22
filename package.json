@@ -1,12 +1,23 @@
 {
-  "dependencies": {
+  "name": "@webpape/ezmax-api-typescript-axios",
+  "version": "1.0.0",
+  "description": "Generated eZmax API with OpenAPI and Typescript/Axios module",
+  "main": "index.ts",
+  "dependencies": {},
+  "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.1.18"
   },
-  "name": "ezmax-api-typescript-axios",
-  "version": "1.0.3",
-  "description": "A eZmax generated API with OpenAPI and Typescript / Axios",
-  "main": "index.ts",
-  "repository": "git@github.com:webpape/ezmax-api-typescript-axios.git",
-  "author": "Patrick Perron <webpape@gmail.com>",
-  "license": "MIT"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webpape/ezmax-api-typescript-axios.git"
+  },
+  "author": "papeweb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webpape/ezmax-api-typescript-axios/issues"
+  },
+  "homepage": "https://github.com/webpape/ezmax-api-typescript-axios#readme"
 }
