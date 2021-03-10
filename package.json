@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Generated eZmax API with OpenAPI and Typescript/Axios module",
   "main": "index.ts",
-  "dependencies": {},
+  "dependencies": {
+    "node-forge": "^0.10.0"
+  },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.1.18"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gen": "openapi-generator-cli generate -g typescript-axios -t templates -o lib -i ezmax-api-definition.json --enable-post-process-file --additional-properties=withSeparateModelsAndApi=true,apiPackage=api,modelPackage=model,supportsES6=true"
   },
   "repository": {
     "type": "git",
