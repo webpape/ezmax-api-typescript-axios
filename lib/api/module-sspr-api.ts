@@ -30,6 +30,9 @@ import { SsprSendUsernamesV1Request } from '../model';
 import { SsprUnlockAccountRequestV1Request } from '../model';
 // @ts-ignore
 import { SsprUnlockAccountV1Request } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ModuleSsprApi - axios parameter creator
  * @export

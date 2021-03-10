@@ -22,6 +22,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { CommonResponseError } from '../model';
 // @ts-ignore
 import { GlobalCustomerGetEndpointV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * GlobalCustomerApi - axios parameter creator
  * @export

@@ -32,6 +32,9 @@ import { EzsignfolderGetObjectV1Response } from '../model';
 import { EzsignfolderSendV1Request } from '../model';
 // @ts-ignore
 import { EzsignfolderSendV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ObjectEzsignfolderApi - axios parameter creator
  * @export

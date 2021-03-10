@@ -22,6 +22,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { FranchisereferalincomeCreateObjectV1Request } from '../model';
 // @ts-ignore
 import { FranchisereferalincomeCreateObjectV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ObjectFranchisereferalincomeApi - axios parameter creator
  * @export

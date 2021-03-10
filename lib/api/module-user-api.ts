@@ -22,6 +22,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { UserCreateEzsignuserV1Request } from '../model';
 // @ts-ignore
 import { UserCreateEzsignuserV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ModuleUserApi - axios parameter creator
  * @export

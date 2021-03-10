@@ -28,6 +28,9 @@ import { EzsignsignatureCreateObjectV1Response } from '../model';
 import { EzsignsignatureDeleteObjectV1Response } from '../model';
 // @ts-ignore
 import { EzsignsignatureGetObjectV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ObjectEzsignsignatureApi - axios parameter creator
  * @export

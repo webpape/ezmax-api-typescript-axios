@@ -30,6 +30,9 @@ import { EzsignfoldersignerassociationDeleteObjectV1Response } from '../model';
 import { EzsignfoldersignerassociationGetInPersonLoginUrlV1Response } from '../model';
 // @ts-ignore
 import { EzsignfoldersignerassociationGetObjectV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ObjectEzsignfoldersignerassociationApi - axios parameter creator
  * @export

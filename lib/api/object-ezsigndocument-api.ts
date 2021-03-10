@@ -34,6 +34,9 @@ import { EzsigndocumentDeleteObjectV1Response } from '../model';
 import { EzsigndocumentGetDownloadUrlV1Response } from '../model';
 // @ts-ignore
 import { EzsigndocumentGetObjectV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ObjectEzsigndocumentApi - axios parameter creator
  * @export

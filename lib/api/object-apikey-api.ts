@@ -22,6 +22,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { ApikeyCreateObjectV1Request } from '../model';
 // @ts-ignore
 import { ApikeyCreateObjectV1Response } from '../model';
+// @ts-ignore
+import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
+
 /**
  * ObjectApikeyApi - axios parameter creator
  * @export
