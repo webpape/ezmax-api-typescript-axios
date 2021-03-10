@@ -4,6 +4,7 @@
 
 export interface ConfigurationParameters {
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    secret?: string;
     username?: string;
     password?: string;
     accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
@@ -19,6 +20,12 @@ export class Configuration {
      * @memberof Configuration
      */
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    /**
+     * Secret key for signing requests
+     * @type {string}
+     * @memberof Configuration
+     */
+    secret?: string;
     /**
      * parameter for basic security
      *
@@ -86,5 +93,25 @@ export class Configuration {
     public isJsonMime(mime: string): boolean {
         const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
         return mime !== null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+    }
+
+    /**
+     * Set Secret
+     *
+     * @param string $secret for signing requests
+     * @return this
+     */
+    public setSecret(secret) {
+        this.secret = secret
+        return this
+    }
+
+    /**
+     * Get Secret
+     *
+     * @return string
+     */
+    public getSecret() {
+        return this.secret
     }
 }
