@@ -83,6 +83,7 @@ export class Configuration {
 
     constructor(param: ConfigurationParameters = {}) {
         this.apiKey = param.apiKey;
+        this.secret = param.secret;
         this.username = param.username;
         this.password = param.password;
         this.accessToken = param.accessToken;
