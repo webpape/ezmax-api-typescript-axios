@@ -83,7 +83,7 @@ export const GlobalCustomerApiAxiosParamCreator = function (configuration?: Conf
 
             // Add Signature to Header
             let signatureHeaders: any
-            if (configuration.apiKey !== null) {
+            if (configuration && configuration.apiKey !== null) {
                 const secret = configuration.getSecret()
                 if (secret !== '') {
                     const headers:IHeadersData = {
