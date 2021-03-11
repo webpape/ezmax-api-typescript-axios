@@ -99,10 +99,15 @@ export const ObjectEzsignfoldersignerassociationApiAxiosParamCreator = function 
                         secret: secret as string,
                         method: 'POST' as string,
                         url: localVarUrlObj.href as string,
-                        body: options.body || '' as string
+                        body: options.headers.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
                 } 
+            }
+
+            if (options.headers.body) { 
+                options.headers.Body = options.headers.body
+                delete options.headers.body
             }
 
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
@@ -180,10 +185,15 @@ export const ObjectEzsignfoldersignerassociationApiAxiosParamCreator = function 
                         secret: secret as string,
                         method: 'DELETE' as string,
                         url: localVarUrlObj.href as string,
-                        body: options.body || '' as string
+                        body: options.headers.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
                 } 
+            }
+
+            if (options.headers.body) { 
+                options.headers.Body = options.headers.body
+                delete options.headers.body
             }
 
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
@@ -254,10 +264,15 @@ export const ObjectEzsignfoldersignerassociationApiAxiosParamCreator = function 
                         secret: secret as string,
                         method: 'GET' as string,
                         url: localVarUrlObj.href as string,
-                        body: options.body || '' as string
+                        body: options.headers.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
                 } 
+            }
+
+            if (options.headers.body) { 
+                options.headers.Body = options.headers.body
+                delete options.headers.body
             }
 
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
@@ -328,10 +343,15 @@ export const ObjectEzsignfoldersignerassociationApiAxiosParamCreator = function 
                         secret: secret as string,
                         method: 'GET' as string,
                         url: localVarUrlObj.href as string,
-                        body: options.body || '' as string
+                        body: options.headers.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
                 } 
+            }
+
+            if (options.headers.body) { 
+                options.headers.Body = options.headers.body
+                delete options.headers.body
             }
 
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
@@ -402,10 +422,15 @@ export const ObjectEzsignfoldersignerassociationApiAxiosParamCreator = function 
                         secret: secret as string,
                         method: 'GET' as string,
                         url: localVarUrlObj.href as string,
-                        body: options.body || '' as string
+                        body: options.headers.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
                 } 
+            }
+
+            if (options.headers.body) { 
+                options.headers.Body = options.headers.body
+                delete options.headers.body
             }
 
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
