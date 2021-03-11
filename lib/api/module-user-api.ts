@@ -44,8 +44,12 @@ export const ModuleUserApiAxiosParamCreator = function (configuration?: Configur
                 throw new RequiredError('userCreateEzsignuserV1Request','Required parameter userCreateEzsignuserV1Request was null or undefined when calling userCreateEzsignuserV1.');
             }
             const localVarPath = `/1/module/user/createezsignuser`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -86,7 +90,7 @@ export const ModuleUserApiAxiosParamCreator = function (configuration?: Configur
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)

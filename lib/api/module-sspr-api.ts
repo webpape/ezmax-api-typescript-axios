@@ -52,8 +52,12 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                 throw new RequiredError('ssprResetPasswordRequestV1Request','Required parameter ssprResetPasswordRequestV1Request was null or undefined when calling ssprResetPasswordRequestV1.');
             }
             const localVarPath = `/1/module/sspr/resetPasswordRequest/`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -94,7 +98,7 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
@@ -130,8 +134,12 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                 throw new RequiredError('ssprResetPasswordV1Request','Required parameter ssprResetPasswordV1Request was null or undefined when calling ssprResetPasswordV1.');
             }
             const localVarPath = `/1/module/sspr/resetPassword`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -172,7 +180,7 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
@@ -208,8 +216,12 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                 throw new RequiredError('ssprSendUsernamesV1Request','Required parameter ssprSendUsernamesV1Request was null or undefined when calling ssprSendUsernamesV1.');
             }
             const localVarPath = `/1/module/sspr/sendUsernames`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -250,7 +262,7 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
@@ -286,8 +298,12 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                 throw new RequiredError('ssprUnlockAccountRequestV1Request','Required parameter ssprUnlockAccountRequestV1Request was null or undefined when calling ssprUnlockAccountRequestV1.');
             }
             const localVarPath = `/1/module/sspr/unlockAccountRequest`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -328,7 +344,7 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
@@ -364,8 +380,12 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                 throw new RequiredError('ssprUnlockAccountV1Request','Required parameter ssprUnlockAccountV1Request was null or undefined when calling ssprUnlockAccountV1.');
             }
             const localVarPath = `/1/module/sspr/unlockAccount`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -406,7 +426,7 @@ export const ModuleSsprApiAxiosParamCreator = function (configuration?: Configur
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)

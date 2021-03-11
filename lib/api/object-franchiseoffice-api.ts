@@ -44,8 +44,12 @@ export const ObjectFranchiseofficeApiAxiosParamCreator = function (configuration
             }
             const localVarPath = `/1/object/franchiseoffice/getAutocomplete/{sSelector}`
                 .replace(`{${"sSelector"}}`, encodeURIComponent(String(sSelector)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -88,7 +92,7 @@ export const ObjectFranchiseofficeApiAxiosParamCreator = function (configuration
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'GET' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)

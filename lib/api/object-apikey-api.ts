@@ -44,8 +44,12 @@ export const ObjectApikeyApiAxiosParamCreator = function (configuration?: Config
                 throw new RequiredError('apikeyCreateObjectV1Request','Required parameter apikeyCreateObjectV1Request was null or undefined when calling apikeyCreateObjectV1.');
             }
             const localVarPath = `/1/object/apikey`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            
+            let basePath = BASE_PATH
+            if (configuration && configuration.basePath) basePath = configuration.basePath
+
+            const localVarUrlObj = new URL(localVarPath, basePath);
+            
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -86,7 +90,7 @@ export const ObjectApikeyApiAxiosParamCreator = function (configuration?: Config
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'POST' as string,
-                        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash as string,
+                        url: localVarUrlObj.href as string,
                         body: options.body || '' as string
                     }
                     signatureHeaders = RequestSignatureApi.getHeaders(headers)
