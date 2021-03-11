@@ -38,7 +38,7 @@ export class RequestSignatureApi {
     const contentToSign = `${signatureData.fingerprint}${signatureData.authorization}${signatureData.date}`
 
     const hmac = forge.hmac.create()
-    hmac.start(forge.md['sha512/256'], signatureData.secret)
+    hmac.start('sha512/256', signatureData.secret)
     hmac.update(contentToSign)
 
     const output: string = hmac.digest().toHex()
