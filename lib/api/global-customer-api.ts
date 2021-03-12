@@ -49,7 +49,7 @@ export const GlobalCustomerApiAxiosParamCreator = function (configuration?: Conf
             
             let basePath = BASE_PATH
             if (configuration && configuration.basePath) basePath = configuration.basePath
-
+            
             const localVarUrlObj = new URL(localVarPath, basePath);
             
             let baseOptions;
@@ -85,24 +85,9 @@ export const GlobalCustomerApiAxiosParamCreator = function (configuration?: Conf
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 
-            // Add Signature to Header
-            let headerBody = ''
-            if (options.headers) {
-                if (options.headers.body) { 
-                    headerBody = options.headers.body
-                    options.headers.Body = options.headers.body
-                    delete options.headers.body
-                } else if (options.headers.Body) {
-                    // do nothing
-                } else {
-                    options.headers.Body = ''
-                }
-            } else {
-                options.headers = {}
-                // options.headers.Body = ''
-            }
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            let signatureHeaders: any = {}
+            // Signature
             if (configuration && configuration.apiKey) {
                 const secret = configuration.getSecret()
                 if (secret) {
@@ -110,16 +95,13 @@ export const GlobalCustomerApiAxiosParamCreator = function (configuration?: Conf
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'GET' as string,
-                        url: localVarUrlObj.href as string,
-                        body: headerBody as string
+                        url: basePath + localVarPath as string,
+                        body: localVarRequestOptions.data as string
                     }
-                    signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
-
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
-
-            
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,

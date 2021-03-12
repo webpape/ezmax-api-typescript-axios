@@ -57,7 +57,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             
             let basePath = BASE_PATH
             if (configuration && configuration.basePath) basePath = configuration.basePath
-
+            
             const localVarUrlObj = new URL(localVarPath, basePath);
             
             let baseOptions;
@@ -91,39 +91,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 
-            // Add Signature to Header
-            let headerBody = ''
-            if (options.headers) {
-                if (options.headers.body) { 
-                    headerBody = options.headers.body
-                    options.headers.Body = options.headers.body
-                    delete options.headers.body
-                } else if (options.headers.Body) {
-                    // do nothing
-                } else {
-                    options.headers.Body = ''
-                }
-            } else {
-                options.headers = {}
-                // options.headers.Body = ''
-            }
-
-            let signatureHeaders: any = {}
-            if (configuration && configuration.apiKey) {
-                const secret = configuration.getSecret()
-                if (secret) {
-                    const headers:IHeadersData = {
-                        authorization: configuration.apiKey as string,
-                        secret: secret as string,
-                        method: 'POST' as string,
-                        url: localVarUrlObj.href as string,
-                        body: headerBody as string
-                    }
-                    signatureHeaders = RequestSignatureApi.getHeaders(headers)
-                } 
-            }
-
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const nonString = typeof ezsignfolderCreateObjectV1Request !== 'string';
             const needsSerialization = nonString && configuration && configuration.isJsonMime
                 ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
@@ -132,7 +100,21 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
                 ? JSON.stringify(ezsignfolderCreateObjectV1Request !== undefined ? ezsignfolderCreateObjectV1Request : {})
                 : (ezsignfolderCreateObjectV1Request || "");
 
-            
+            // Signature
+            if (configuration && configuration.apiKey) {
+                const secret = configuration.getSecret()
+                if (secret) {
+                    const headers:IHeadersData = {
+                        authorization: configuration.apiKey as string,
+                        secret: secret as string,
+                        method: 'POST' as string,
+                        url: basePath + localVarPath as string,
+                        body: localVarRequestOptions.data as string
+                    }
+                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
+                } 
+            }
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -156,7 +138,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             
             let basePath = BASE_PATH
             if (configuration && configuration.basePath) basePath = configuration.basePath
-
+            
             const localVarUrlObj = new URL(localVarPath, basePath);
             
             let baseOptions;
@@ -188,24 +170,9 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 
-            // Add Signature to Header
-            let headerBody = ''
-            if (options.headers) {
-                if (options.headers.body) { 
-                    headerBody = options.headers.body
-                    options.headers.Body = options.headers.body
-                    delete options.headers.body
-                } else if (options.headers.Body) {
-                    // do nothing
-                } else {
-                    options.headers.Body = ''
-                }
-            } else {
-                options.headers = {}
-                // options.headers.Body = ''
-            }
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            let signatureHeaders: any = {}
+            // Signature
             if (configuration && configuration.apiKey) {
                 const secret = configuration.getSecret()
                 if (secret) {
@@ -213,16 +180,13 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'DELETE' as string,
-                        url: localVarUrlObj.href as string,
-                        body: headerBody as string
+                        url: basePath + localVarPath as string,
+                        body: localVarRequestOptions.data as string
                     }
-                    signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
-
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
-
-            
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -246,7 +210,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             
             let basePath = BASE_PATH
             if (configuration && configuration.basePath) basePath = configuration.basePath
-
+            
             const localVarUrlObj = new URL(localVarPath, basePath);
             
             let baseOptions;
@@ -278,24 +242,9 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 
-            // Add Signature to Header
-            let headerBody = ''
-            if (options.headers) {
-                if (options.headers.body) { 
-                    headerBody = options.headers.body
-                    options.headers.Body = options.headers.body
-                    delete options.headers.body
-                } else if (options.headers.Body) {
-                    // do nothing
-                } else {
-                    options.headers.Body = ''
-                }
-            } else {
-                options.headers = {}
-                // options.headers.Body = ''
-            }
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            let signatureHeaders: any = {}
+            // Signature
             if (configuration && configuration.apiKey) {
                 const secret = configuration.getSecret()
                 if (secret) {
@@ -303,16 +252,13 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'GET' as string,
-                        url: localVarUrlObj.href as string,
-                        body: headerBody as string
+                        url: basePath + localVarPath as string,
+                        body: localVarRequestOptions.data as string
                     }
-                    signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
-
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
-
-            
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -336,7 +282,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             
             let basePath = BASE_PATH
             if (configuration && configuration.basePath) basePath = configuration.basePath
-
+            
             const localVarUrlObj = new URL(localVarPath, basePath);
             
             let baseOptions;
@@ -368,24 +314,9 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 
-            // Add Signature to Header
-            let headerBody = ''
-            if (options.headers) {
-                if (options.headers.body) { 
-                    headerBody = options.headers.body
-                    options.headers.Body = options.headers.body
-                    delete options.headers.body
-                } else if (options.headers.Body) {
-                    // do nothing
-                } else {
-                    options.headers.Body = ''
-                }
-            } else {
-                options.headers = {}
-                // options.headers.Body = ''
-            }
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            let signatureHeaders: any = {}
+            // Signature
             if (configuration && configuration.apiKey) {
                 const secret = configuration.getSecret()
                 if (secret) {
@@ -393,16 +324,13 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
                         authorization: configuration.apiKey as string,
                         secret: secret as string,
                         method: 'GET' as string,
-                        url: localVarUrlObj.href as string,
-                        body: headerBody as string
+                        url: basePath + localVarPath as string,
+                        body: localVarRequestOptions.data as string
                     }
-                    signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
-
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
-
-            
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -431,7 +359,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             
             let basePath = BASE_PATH
             if (configuration && configuration.basePath) basePath = configuration.basePath
-
+            
             const localVarUrlObj = new URL(localVarPath, basePath);
             
             let baseOptions;
@@ -465,39 +393,7 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 
-            // Add Signature to Header
-            let headerBody = ''
-            if (options.headers) {
-                if (options.headers.body) { 
-                    headerBody = options.headers.body
-                    options.headers.Body = options.headers.body
-                    delete options.headers.body
-                } else if (options.headers.Body) {
-                    // do nothing
-                } else {
-                    options.headers.Body = ''
-                }
-            } else {
-                options.headers = {}
-                // options.headers.Body = ''
-            }
-
-            let signatureHeaders: any = {}
-            if (configuration && configuration.apiKey) {
-                const secret = configuration.getSecret()
-                if (secret) {
-                    const headers:IHeadersData = {
-                        authorization: configuration.apiKey as string,
-                        secret: secret as string,
-                        method: 'POST' as string,
-                        url: localVarUrlObj.href as string,
-                        body: headerBody as string
-                    }
-                    signatureHeaders = RequestSignatureApi.getHeaders(headers)
-                } 
-            }
-
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers, ...signatureHeaders};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const nonString = typeof ezsignfolderSendV1Request !== 'string';
             const needsSerialization = nonString && configuration && configuration.isJsonMime
                 ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
@@ -506,7 +402,21 @@ export const ObjectEzsignfolderApiAxiosParamCreator = function (configuration?: 
                 ? JSON.stringify(ezsignfolderSendV1Request !== undefined ? ezsignfolderSendV1Request : {})
                 : (ezsignfolderSendV1Request || "");
 
-            
+            // Signature
+            if (configuration && configuration.apiKey) {
+                const secret = configuration.getSecret()
+                if (secret) {
+                    const headers:IHeadersData = {
+                        authorization: configuration.apiKey as string,
+                        secret: secret as string,
+                        method: 'POST' as string,
+                        url: basePath + localVarPath as string,
+                        body: localVarRequestOptions.data as string
+                    }
+                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
+                } 
+            }
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
