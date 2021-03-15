@@ -110,6 +110,7 @@ model/sspr-reset-password-v1-request.ts
 model/sspr-send-usernames-v1-request.ts
 model/sspr-unlock-account-request-v1-request.ts
 model/sspr-unlock-account-v1-request.ts
+model/sspr-validate-token-v1-request.ts
 model/unusedezsigndocument-edit-object-v1-request.ts
 model/unusedezsigndocument-edit-object-v1-response.ts
 model/unusedezsignfolder-edit-object-v1-request.ts

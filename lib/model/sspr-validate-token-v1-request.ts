@@ -16,45 +16,45 @@
 import { FieldEUserTypeSSPR } from './field-euser-type-sspr';
 
 /**
- * Request for the /1/module/sspr/unlockAccount API Request
+ * Request for the /1/module/sspr/validateToken API Request
  * @export
- * @interface SsprUnlockAccountV1Request
+ * @interface SsprValidateTokenV1Request
  */
-export interface SsprUnlockAccountV1Request {
+export interface SsprValidateTokenV1Request {
     /**
      * The customer code assigned to your account
      * @type {string}
-     * @memberof SsprUnlockAccountV1Request
+     * @memberof SsprValidateTokenV1Request
      */
     pksCustomerCode: string;
     /**
      * The unique ID of the Language.  Valid values:  |Value|Description| |-|-| |1|French| |2|English|
      * @type {number}
-     * @memberof SsprUnlockAccountV1Request
+     * @memberof SsprValidateTokenV1Request
      */
     fkiLanguageID: number;
     /**
      * 
      * @type {FieldEUserTypeSSPR}
-     * @memberof SsprUnlockAccountV1Request
+     * @memberof SsprValidateTokenV1Request
      */
     eUserTypeSSPR: FieldEUserTypeSSPR;
     /**
      * The email address.
      * @type {string}
-     * @memberof SsprUnlockAccountV1Request
+     * @memberof SsprValidateTokenV1Request
      */
     sEmailAddress?: string;
     /**
      * The Login name of the User.
      * @type {string}
-     * @memberof SsprUnlockAccountV1Request
+     * @memberof SsprValidateTokenV1Request
      */
     sUserLoginname?: string;
     /**
      * Hex Encoded Secret SSPR token
      * @type {string}
-     * @memberof SsprUnlockAccountV1Request
+     * @memberof SsprValidateTokenV1Request
      */
     binUserSSPRtoken: string;
 }

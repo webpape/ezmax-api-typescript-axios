@@ -89,6 +89,7 @@ export * from './sspr-reset-password-v1-request';
 export * from './sspr-send-usernames-v1-request';
 export * from './sspr-unlock-account-request-v1-request';
 export * from './sspr-unlock-account-v1-request';
+export * from './sspr-validate-token-v1-request';
 export * from './unusedezsigndocument-edit-object-v1-request';
 export * from './unusedezsigndocument-edit-object-v1-response';
 export * from './unusedezsignfolder-edit-object-v1-request';

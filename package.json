@@ -1,6 +1,6 @@
 {
   "name": "@webpape/ezmax-api-typescript-axios",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Generated eZmax API with OpenAPI and Typescript/Axios module",
   "main": "index.ts",
   "dependencies": {
