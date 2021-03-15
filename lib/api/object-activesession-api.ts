@@ -17,12 +17,13 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
 import { ActivesessionGetCurrentV1Response } from '../model';
 // @ts-ignore
-import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
-
+import { RequestSignature, IHeadersData } from '../api/request-signature';
 /**
  * ObjectActivesessionApi - axios parameter creator
  * @export
@@ -38,11 +39,11 @@ export const ObjectActivesessionApiAxiosParamCreator = function (configuration?:
         activesessionGetCurrentV1: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/1/object/activesession/getCurrent`;
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -53,25 +54,12 @@ export const ObjectActivesessionApiAxiosParamCreator = function (configuration?:
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             // Signature
@@ -85,13 +73,13 @@ export const ObjectActivesessionApiAxiosParamCreator = function (configuration?:
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -103,6 +91,7 @@ export const ObjectActivesessionApiAxiosParamCreator = function (configuration?:
  * @export
  */
 export const ObjectActivesessionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ObjectActivesessionApiAxiosParamCreator(configuration)
     return {
         /**
          * Retrieve the details about the current activesession
@@ -111,11 +100,8 @@ export const ObjectActivesessionApiFp = function(configuration?: Configuration) 
          * @throws {RequiredError}
          */
         async activesessionGetCurrentV1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivesessionGetCurrentV1Response>> {
-            const localVarAxiosArgs = await ObjectActivesessionApiAxiosParamCreator(configuration).activesessionGetCurrentV1(options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.activesessionGetCurrentV1(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
@@ -125,6 +111,7 @@ export const ObjectActivesessionApiFp = function(configuration?: Configuration) 
  * @export
  */
 export const ObjectActivesessionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ObjectActivesessionApiFp(configuration)
     return {
         /**
          * Retrieve the details about the current activesession
@@ -133,7 +120,7 @@ export const ObjectActivesessionApiFactory = function (configuration?: Configura
          * @throws {RequiredError}
          */
         activesessionGetCurrentV1(options?: any): AxiosPromise<ActivesessionGetCurrentV1Response> {
-            return ObjectActivesessionApiFp(configuration).activesessionGetCurrentV1(options).then((request) => request(axios, basePath));
+            return localVarFp.activesessionGetCurrentV1(options).then((request) => request(axios, basePath));
         },
     };
 };

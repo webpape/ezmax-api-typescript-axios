@@ -17,12 +17,13 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
 import { CommonGetAutocompleteV1Response } from '../model';
 // @ts-ignore
-import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
-
+import { RequestSignature, IHeadersData } from '../api/request-signature';
 /**
  * ObjectFranchisebrokerApi - axios parameter creator
  * @export
@@ -39,17 +40,15 @@ export const ObjectFranchisebrokerApiAxiosParamCreator = function (configuration
          */
         franchisebrokerGetAutocompleteV1: async (sSelector: 'Active' | 'All', sQuery?: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'sSelector' is not null or undefined
-            if (sSelector === null || sSelector === undefined) {
-                throw new RequiredError('sSelector','Required parameter sSelector was null or undefined when calling franchisebrokerGetAutocompleteV1.');
-            }
+            assertParamExists('franchisebrokerGetAutocompleteV1', 'sSelector', sSelector)
             const localVarPath = `/1/object/franchisebroker/getAutocomplete/{sSelector}`
                 .replace(`{${"sSelector"}}`, encodeURIComponent(String(sSelector)));
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -60,29 +59,16 @@ export const ObjectFranchisebrokerApiAxiosParamCreator = function (configuration
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
             if (sQuery !== undefined) {
                 localVarQueryParameter['sQuery'] = sQuery;
             }
 
 
     
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             // Signature
@@ -96,13 +82,13 @@ export const ObjectFranchisebrokerApiAxiosParamCreator = function (configuration
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -114,6 +100,7 @@ export const ObjectFranchisebrokerApiAxiosParamCreator = function (configuration
  * @export
  */
 export const ObjectFranchisebrokerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ObjectFranchisebrokerApiAxiosParamCreator(configuration)
     return {
         /**
          * Get the list of Franchisebrokers to be used in a dropdown or autocomplete control.
@@ -124,11 +111,8 @@ export const ObjectFranchisebrokerApiFp = function(configuration?: Configuration
          * @throws {RequiredError}
          */
         async franchisebrokerGetAutocompleteV1(sSelector: 'Active' | 'All', sQuery?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommonGetAutocompleteV1Response>> {
-            const localVarAxiosArgs = await ObjectFranchisebrokerApiAxiosParamCreator(configuration).franchisebrokerGetAutocompleteV1(sSelector, sQuery, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.franchisebrokerGetAutocompleteV1(sSelector, sQuery, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
@@ -138,6 +122,7 @@ export const ObjectFranchisebrokerApiFp = function(configuration?: Configuration
  * @export
  */
 export const ObjectFranchisebrokerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ObjectFranchisebrokerApiFp(configuration)
     return {
         /**
          * Get the list of Franchisebrokers to be used in a dropdown or autocomplete control.
@@ -148,7 +133,7 @@ export const ObjectFranchisebrokerApiFactory = function (configuration?: Configu
          * @throws {RequiredError}
          */
         franchisebrokerGetAutocompleteV1(sSelector: 'Active' | 'All', sQuery?: string, options?: any): AxiosPromise<CommonGetAutocompleteV1Response> {
-            return ObjectFranchisebrokerApiFp(configuration).franchisebrokerGetAutocompleteV1(sSelector, sQuery, options).then((request) => request(axios, basePath));
+            return localVarFp.franchisebrokerGetAutocompleteV1(sSelector, sQuery, options).then((request) => request(axios, basePath));
         },
     };
 };

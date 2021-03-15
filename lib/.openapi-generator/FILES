@@ -14,7 +14,9 @@ api/object-franchisebroker-api.ts
 api/object-franchiseoffice-api.ts
 api/object-franchisereferalincome-api.ts
 api/object-period-api.ts
+api/request-signature.ts
 base.ts
+common.ts
 configuration.ts
 git_push.sh
 index.ts

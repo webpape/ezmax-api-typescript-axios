@@ -1,3 +1,5 @@
+/* tslint:disable */
+/* eslint-disable */
 import forge from 'node-forge'
 
 export interface IFingerprintData {

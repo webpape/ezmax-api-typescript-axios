@@ -17,14 +17,15 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
 import { UserCreateEzsignuserV1Request } from '../model';
 // @ts-ignore
 import { UserCreateEzsignuserV1Response } from '../model';
 // @ts-ignore
-import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
-
+import { RequestSignature, IHeadersData } from '../api/request-signature';
 /**
  * ModuleUserApi - axios parameter creator
  * @export
@@ -40,16 +41,14 @@ export const ModuleUserApiAxiosParamCreator = function (configuration?: Configur
          */
         userCreateEzsignuserV1: async (userCreateEzsignuserV1Request: Array<UserCreateEzsignuserV1Request>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'userCreateEzsignuserV1Request' is not null or undefined
-            if (userCreateEzsignuserV1Request === null || userCreateEzsignuserV1Request === undefined) {
-                throw new RequiredError('userCreateEzsignuserV1Request','Required parameter userCreateEzsignuserV1Request was null or undefined when calling userCreateEzsignuserV1.');
-            }
+            assertParamExists('userCreateEzsignuserV1', 'userCreateEzsignuserV1Request', userCreateEzsignuserV1Request)
             const localVarPath = `/1/module/user/createezsignuser`;
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -60,35 +59,16 @@ export const ModuleUserApiAxiosParamCreator = function (configuration?: Configur
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const nonString = typeof userCreateEzsignuserV1Request !== 'string';
-            const needsSerialization = nonString && configuration && configuration.isJsonMime
-                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
-                : nonString;
-            localVarRequestOptions.data =  needsSerialization
-                ? JSON.stringify(userCreateEzsignuserV1Request !== undefined ? userCreateEzsignuserV1Request : {})
-                : (userCreateEzsignuserV1Request || "");
+            localVarRequestOptions.data = serializeDataIfNeeded(userCreateEzsignuserV1Request, localVarRequestOptions, configuration)
 
             // Signature
             if (configuration && configuration.apiKey) {
@@ -101,13 +81,13 @@ export const ModuleUserApiAxiosParamCreator = function (configuration?: Configur
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -119,6 +99,7 @@ export const ModuleUserApiAxiosParamCreator = function (configuration?: Configur
  * @export
  */
 export const ModuleUserApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ModuleUserApiAxiosParamCreator(configuration)
     return {
         /**
          * The endpoint allows to initiate the creation or a user of type Ezsignuser.  The user will be created only once the email verification process will be completed
@@ -128,11 +109,8 @@ export const ModuleUserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async userCreateEzsignuserV1(userCreateEzsignuserV1Request: Array<UserCreateEzsignuserV1Request>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCreateEzsignuserV1Response>> {
-            const localVarAxiosArgs = await ModuleUserApiAxiosParamCreator(configuration).userCreateEzsignuserV1(userCreateEzsignuserV1Request, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userCreateEzsignuserV1(userCreateEzsignuserV1Request, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
@@ -142,6 +120,7 @@ export const ModuleUserApiFp = function(configuration?: Configuration) {
  * @export
  */
 export const ModuleUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ModuleUserApiFp(configuration)
     return {
         /**
          * The endpoint allows to initiate the creation or a user of type Ezsignuser.  The user will be created only once the email verification process will be completed
@@ -151,7 +130,7 @@ export const ModuleUserApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         userCreateEzsignuserV1(userCreateEzsignuserV1Request: Array<UserCreateEzsignuserV1Request>, options?: any): AxiosPromise<UserCreateEzsignuserV1Response> {
-            return ModuleUserApiFp(configuration).userCreateEzsignuserV1(userCreateEzsignuserV1Request, options).then((request) => request(axios, basePath));
+            return localVarFp.userCreateEzsignuserV1(userCreateEzsignuserV1Request, options).then((request) => request(axios, basePath));
         },
     };
 };

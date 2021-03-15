@@ -17,6 +17,8 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
 import { CommonResponseError } from '../model';
@@ -35,8 +37,7 @@ import { EzsigndocumentGetDownloadUrlV1Response } from '../model';
 // @ts-ignore
 import { EzsigndocumentGetObjectV1Response } from '../model';
 // @ts-ignore
-import { RequestSignatureApi, IHeadersData } from './_request-signature-api';
-
+import { RequestSignature, IHeadersData } from '../api/request-signature';
 /**
  * ObjectEzsigndocumentApi - axios parameter creator
  * @export
@@ -53,21 +54,17 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
          */
         ezsigndocumentApplyEzsigntemplateV1: async (pkiEzsigndocumentID: number, ezsigndocumentApplyEzsigntemplateV1Request: EzsigndocumentApplyEzsigntemplateV1Request, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pkiEzsigndocumentID' is not null or undefined
-            if (pkiEzsigndocumentID === null || pkiEzsigndocumentID === undefined) {
-                throw new RequiredError('pkiEzsigndocumentID','Required parameter pkiEzsigndocumentID was null or undefined when calling ezsigndocumentApplyEzsigntemplateV1.');
-            }
+            assertParamExists('ezsigndocumentApplyEzsigntemplateV1', 'pkiEzsigndocumentID', pkiEzsigndocumentID)
             // verify required parameter 'ezsigndocumentApplyEzsigntemplateV1Request' is not null or undefined
-            if (ezsigndocumentApplyEzsigntemplateV1Request === null || ezsigndocumentApplyEzsigntemplateV1Request === undefined) {
-                throw new RequiredError('ezsigndocumentApplyEzsigntemplateV1Request','Required parameter ezsigndocumentApplyEzsigntemplateV1Request was null or undefined when calling ezsigndocumentApplyEzsigntemplateV1.');
-            }
+            assertParamExists('ezsigndocumentApplyEzsigntemplateV1', 'ezsigndocumentApplyEzsigntemplateV1Request', ezsigndocumentApplyEzsigntemplateV1Request)
             const localVarPath = `/1/object/ezsigndocument/{pkiEzsigndocumentID}/applyezsigntemplate`
                 .replace(`{${"pkiEzsigndocumentID"}}`, encodeURIComponent(String(pkiEzsigndocumentID)));
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -78,35 +75,16 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const nonString = typeof ezsigndocumentApplyEzsigntemplateV1Request !== 'string';
-            const needsSerialization = nonString && configuration && configuration.isJsonMime
-                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
-                : nonString;
-            localVarRequestOptions.data =  needsSerialization
-                ? JSON.stringify(ezsigndocumentApplyEzsigntemplateV1Request !== undefined ? ezsigndocumentApplyEzsigntemplateV1Request : {})
-                : (ezsigndocumentApplyEzsigntemplateV1Request || "");
+            localVarRequestOptions.data = serializeDataIfNeeded(ezsigndocumentApplyEzsigntemplateV1Request, localVarRequestOptions, configuration)
 
             // Signature
             if (configuration && configuration.apiKey) {
@@ -119,13 +97,13 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -138,16 +116,14 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
          */
         ezsigndocumentCreateObjectV1: async (ezsigndocumentCreateObjectV1Request: Array<EzsigndocumentCreateObjectV1Request>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'ezsigndocumentCreateObjectV1Request' is not null or undefined
-            if (ezsigndocumentCreateObjectV1Request === null || ezsigndocumentCreateObjectV1Request === undefined) {
-                throw new RequiredError('ezsigndocumentCreateObjectV1Request','Required parameter ezsigndocumentCreateObjectV1Request was null or undefined when calling ezsigndocumentCreateObjectV1.');
-            }
+            assertParamExists('ezsigndocumentCreateObjectV1', 'ezsigndocumentCreateObjectV1Request', ezsigndocumentCreateObjectV1Request)
             const localVarPath = `/1/object/ezsigndocument`;
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -158,35 +134,16 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const nonString = typeof ezsigndocumentCreateObjectV1Request !== 'string';
-            const needsSerialization = nonString && configuration && configuration.isJsonMime
-                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
-                : nonString;
-            localVarRequestOptions.data =  needsSerialization
-                ? JSON.stringify(ezsigndocumentCreateObjectV1Request !== undefined ? ezsigndocumentCreateObjectV1Request : {})
-                : (ezsigndocumentCreateObjectV1Request || "");
+            localVarRequestOptions.data = serializeDataIfNeeded(ezsigndocumentCreateObjectV1Request, localVarRequestOptions, configuration)
 
             // Signature
             if (configuration && configuration.apiKey) {
@@ -199,13 +156,13 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -218,17 +175,15 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
          */
         ezsigndocumentDeleteObjectV1: async (pkiEzsigndocumentID: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pkiEzsigndocumentID' is not null or undefined
-            if (pkiEzsigndocumentID === null || pkiEzsigndocumentID === undefined) {
-                throw new RequiredError('pkiEzsigndocumentID','Required parameter pkiEzsigndocumentID was null or undefined when calling ezsigndocumentDeleteObjectV1.');
-            }
+            assertParamExists('ezsigndocumentDeleteObjectV1', 'pkiEzsigndocumentID', pkiEzsigndocumentID)
             const localVarPath = `/1/object/ezsigndocument/{pkiEzsigndocumentID}`
                 .replace(`{${"pkiEzsigndocumentID"}}`, encodeURIComponent(String(pkiEzsigndocumentID)));
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -239,25 +194,12 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             // Signature
@@ -271,13 +213,13 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -290,17 +232,15 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
          */
         ezsigndocumentGetChildrenV1: async (pkiEzsigndocumentID: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pkiEzsigndocumentID' is not null or undefined
-            if (pkiEzsigndocumentID === null || pkiEzsigndocumentID === undefined) {
-                throw new RequiredError('pkiEzsigndocumentID','Required parameter pkiEzsigndocumentID was null or undefined when calling ezsigndocumentGetChildrenV1.');
-            }
+            assertParamExists('ezsigndocumentGetChildrenV1', 'pkiEzsigndocumentID', pkiEzsigndocumentID)
             const localVarPath = `/1/object/ezsigndocument/{pkiEzsigndocumentID}/getChildren`
                 .replace(`{${"pkiEzsigndocumentID"}}`, encodeURIComponent(String(pkiEzsigndocumentID)));
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -311,25 +251,12 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             // Signature
@@ -343,13 +270,13 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -363,22 +290,18 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
          */
         ezsigndocumentGetDownloadUrlV1: async (pkiEzsigndocumentID: number, eDocumentType: 'Initial' | 'Signed' | 'Proof' | 'Proofdocument', options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pkiEzsigndocumentID' is not null or undefined
-            if (pkiEzsigndocumentID === null || pkiEzsigndocumentID === undefined) {
-                throw new RequiredError('pkiEzsigndocumentID','Required parameter pkiEzsigndocumentID was null or undefined when calling ezsigndocumentGetDownloadUrlV1.');
-            }
+            assertParamExists('ezsigndocumentGetDownloadUrlV1', 'pkiEzsigndocumentID', pkiEzsigndocumentID)
             // verify required parameter 'eDocumentType' is not null or undefined
-            if (eDocumentType === null || eDocumentType === undefined) {
-                throw new RequiredError('eDocumentType','Required parameter eDocumentType was null or undefined when calling ezsigndocumentGetDownloadUrlV1.');
-            }
+            assertParamExists('ezsigndocumentGetDownloadUrlV1', 'eDocumentType', eDocumentType)
             const localVarPath = `/1/object/ezsigndocument/{pkiEzsigndocumentID}/getDownloadUrl/{eDocumentType}`
                 .replace(`{${"pkiEzsigndocumentID"}}`, encodeURIComponent(String(pkiEzsigndocumentID)))
                 .replace(`{${"eDocumentType"}}`, encodeURIComponent(String(eDocumentType)));
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -389,25 +312,12 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             // Signature
@@ -421,13 +331,13 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -440,17 +350,15 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
          */
         ezsigndocumentGetObjectV1: async (pkiEzsigndocumentID: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pkiEzsigndocumentID' is not null or undefined
-            if (pkiEzsigndocumentID === null || pkiEzsigndocumentID === undefined) {
-                throw new RequiredError('pkiEzsigndocumentID','Required parameter pkiEzsigndocumentID was null or undefined when calling ezsigndocumentGetObjectV1.');
-            }
+            assertParamExists('ezsigndocumentGetObjectV1', 'pkiEzsigndocumentID', pkiEzsigndocumentID)
             const localVarPath = `/1/object/ezsigndocument/{pkiEzsigndocumentID}`
                 .replace(`{${"pkiEzsigndocumentID"}}`, encodeURIComponent(String(pkiEzsigndocumentID)));
             
-            let basePath = BASE_PATH
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            let basePath = DUMMY_BASE_URL
             if (configuration && configuration.basePath) basePath = configuration.basePath
-            
             const localVarUrlObj = new URL(localVarPath, basePath);
-            
+
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -461,25 +369,12 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             // authentication Authorization required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? await configuration.apiKey("Authorization")
-                    : await configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-    
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
 
     
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             // Signature
@@ -493,13 +388,13 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
                         url: basePath + localVarPath as string,
                         body: localVarRequestOptions.data as string
                     }
-                    const signatureHeaders = RequestSignatureApi.getHeaders(headers)
+                    const signatureHeaders = RequestSignature.getHeaders(headers)
                     localVarRequestOptions.headers = { ...localVarRequestOptions.headers, ...signatureHeaders }
                 } 
             }
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -511,6 +406,7 @@ export const ObjectEzsigndocumentApiAxiosParamCreator = function (configuration?
  * @export
  */
 export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ObjectEzsigndocumentApiAxiosParamCreator(configuration)
     return {
         /**
          * This endpoint applies a predefined template to the ezsign document. This allows to automatically apply all the form and signature fields on a document in a single step.  The document must not already have fields otherwise an error will be returned.
@@ -521,11 +417,8 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async ezsigndocumentApplyEzsigntemplateV1(pkiEzsigndocumentID: number, ezsigndocumentApplyEzsigntemplateV1Request: EzsigndocumentApplyEzsigntemplateV1Request, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EzsigndocumentApplyEzsigntemplateV1Response>> {
-            const localVarAxiosArgs = await ObjectEzsigndocumentApiAxiosParamCreator(configuration).ezsigndocumentApplyEzsigntemplateV1(pkiEzsigndocumentID, ezsigndocumentApplyEzsigntemplateV1Request, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ezsigndocumentApplyEzsigntemplateV1(pkiEzsigndocumentID, ezsigndocumentApplyEzsigntemplateV1Request, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * The endpoint allows to create one or many elements at once.  The array can contain simple (Just the object) or compound (The object and its child) objects.  Creating compound elements allows to reduce the multiple requests to create all child objects.
@@ -535,11 +428,8 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async ezsigndocumentCreateObjectV1(ezsigndocumentCreateObjectV1Request: Array<EzsigndocumentCreateObjectV1Request>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EzsigndocumentCreateObjectV1Response>> {
-            const localVarAxiosArgs = await ObjectEzsigndocumentApiAxiosParamCreator(configuration).ezsigndocumentCreateObjectV1(ezsigndocumentCreateObjectV1Request, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ezsigndocumentCreateObjectV1(ezsigndocumentCreateObjectV1Request, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
@@ -549,11 +439,8 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async ezsigndocumentDeleteObjectV1(pkiEzsigndocumentID: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EzsigndocumentDeleteObjectV1Response>> {
-            const localVarAxiosArgs = await ObjectEzsigndocumentApiAxiosParamCreator(configuration).ezsigndocumentDeleteObjectV1(pkiEzsigndocumentID, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ezsigndocumentDeleteObjectV1(pkiEzsigndocumentID, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
@@ -563,11 +450,8 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async ezsigndocumentGetChildrenV1(pkiEzsigndocumentID: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await ObjectEzsigndocumentApiAxiosParamCreator(configuration).ezsigndocumentGetChildrenV1(pkiEzsigndocumentID, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ezsigndocumentGetChildrenV1(pkiEzsigndocumentID, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * This endpoint returns URLs to different files that can be downloaded during the signing process.  These links will expire after 5 minutes so the download of the file should be made soon after retrieving the link.
@@ -578,11 +462,8 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async ezsigndocumentGetDownloadUrlV1(pkiEzsigndocumentID: number, eDocumentType: 'Initial' | 'Signed' | 'Proof' | 'Proofdocument', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EzsigndocumentGetDownloadUrlV1Response>> {
-            const localVarAxiosArgs = await ObjectEzsigndocumentApiAxiosParamCreator(configuration).ezsigndocumentGetDownloadUrlV1(pkiEzsigndocumentID, eDocumentType, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ezsigndocumentGetDownloadUrlV1(pkiEzsigndocumentID, eDocumentType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
@@ -592,11 +473,8 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async ezsigndocumentGetObjectV1(pkiEzsigndocumentID: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EzsigndocumentGetObjectV1Response>> {
-            const localVarAxiosArgs = await ObjectEzsigndocumentApiAxiosParamCreator(configuration).ezsigndocumentGetObjectV1(pkiEzsigndocumentID, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ezsigndocumentGetObjectV1(pkiEzsigndocumentID, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
@@ -606,6 +484,7 @@ export const ObjectEzsigndocumentApiFp = function(configuration?: Configuration)
  * @export
  */
 export const ObjectEzsigndocumentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ObjectEzsigndocumentApiFp(configuration)
     return {
         /**
          * This endpoint applies a predefined template to the ezsign document. This allows to automatically apply all the form and signature fields on a document in a single step.  The document must not already have fields otherwise an error will be returned.
@@ -616,7 +495,7 @@ export const ObjectEzsigndocumentApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         ezsigndocumentApplyEzsigntemplateV1(pkiEzsigndocumentID: number, ezsigndocumentApplyEzsigntemplateV1Request: EzsigndocumentApplyEzsigntemplateV1Request, options?: any): AxiosPromise<EzsigndocumentApplyEzsigntemplateV1Response> {
-            return ObjectEzsigndocumentApiFp(configuration).ezsigndocumentApplyEzsigntemplateV1(pkiEzsigndocumentID, ezsigndocumentApplyEzsigntemplateV1Request, options).then((request) => request(axios, basePath));
+            return localVarFp.ezsigndocumentApplyEzsigntemplateV1(pkiEzsigndocumentID, ezsigndocumentApplyEzsigntemplateV1Request, options).then((request) => request(axios, basePath));
         },
         /**
          * The endpoint allows to create one or many elements at once.  The array can contain simple (Just the object) or compound (The object and its child) objects.  Creating compound elements allows to reduce the multiple requests to create all child objects.
@@ -626,7 +505,7 @@ export const ObjectEzsigndocumentApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         ezsigndocumentCreateObjectV1(ezsigndocumentCreateObjectV1Request: Array<EzsigndocumentCreateObjectV1Request>, options?: any): AxiosPromise<EzsigndocumentCreateObjectV1Response> {
-            return ObjectEzsigndocumentApiFp(configuration).ezsigndocumentCreateObjectV1(ezsigndocumentCreateObjectV1Request, options).then((request) => request(axios, basePath));
+            return localVarFp.ezsigndocumentCreateObjectV1(ezsigndocumentCreateObjectV1Request, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -636,7 +515,7 @@ export const ObjectEzsigndocumentApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         ezsigndocumentDeleteObjectV1(pkiEzsigndocumentID: number, options?: any): AxiosPromise<EzsigndocumentDeleteObjectV1Response> {
-            return ObjectEzsigndocumentApiFp(configuration).ezsigndocumentDeleteObjectV1(pkiEzsigndocumentID, options).then((request) => request(axios, basePath));
+            return localVarFp.ezsigndocumentDeleteObjectV1(pkiEzsigndocumentID, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -646,7 +525,7 @@ export const ObjectEzsigndocumentApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         ezsigndocumentGetChildrenV1(pkiEzsigndocumentID: number, options?: any): AxiosPromise<void> {
-            return ObjectEzsigndocumentApiFp(configuration).ezsigndocumentGetChildrenV1(pkiEzsigndocumentID, options).then((request) => request(axios, basePath));
+            return localVarFp.ezsigndocumentGetChildrenV1(pkiEzsigndocumentID, options).then((request) => request(axios, basePath));
         },
         /**
          * This endpoint returns URLs to different files that can be downloaded during the signing process.  These links will expire after 5 minutes so the download of the file should be made soon after retrieving the link.
@@ -657,7 +536,7 @@ export const ObjectEzsigndocumentApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         ezsigndocumentGetDownloadUrlV1(pkiEzsigndocumentID: number, eDocumentType: 'Initial' | 'Signed' | 'Proof' | 'Proofdocument', options?: any): AxiosPromise<EzsigndocumentGetDownloadUrlV1Response> {
-            return ObjectEzsigndocumentApiFp(configuration).ezsigndocumentGetDownloadUrlV1(pkiEzsigndocumentID, eDocumentType, options).then((request) => request(axios, basePath));
+            return localVarFp.ezsigndocumentGetDownloadUrlV1(pkiEzsigndocumentID, eDocumentType, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -667,7 +546,7 @@ export const ObjectEzsigndocumentApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         ezsigndocumentGetObjectV1(pkiEzsigndocumentID: number, options?: any): AxiosPromise<EzsigndocumentGetObjectV1Response> {
-            return ObjectEzsigndocumentApiFp(configuration).ezsigndocumentGetObjectV1(pkiEzsigndocumentID, options).then((request) => request(axios, basePath));
+            return localVarFp.ezsigndocumentGetObjectV1(pkiEzsigndocumentID, options).then((request) => request(axios, basePath));
         },
     };
 };
