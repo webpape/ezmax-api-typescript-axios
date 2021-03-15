@@ -1,6 +1,6 @@
 {
   "name": "@webpape/ezmax-api-typescript-axios",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Generated eZmax API with OpenAPI and Typescript/Axios module",
   "main": "index.ts",
   "dependencies": {
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gen": "openapi-generator-cli generate -g typescript-axios -t templates -o lib -i ezmax-api-definition.json -c templates/_config.yaml --enable-post-process-file --additional-properties=withSeparateModelsAndApi=true,apiPackage=api,modelPackage=model,supportsES6=true"
+    "gen": "openapi-generator-cli generate -g typescript-axios -t templates -o lib -i ezmax-api-definition.json -c templates/._config.yaml --enable-post-process-file --additional-properties=withSeparateModelsAndApi=true,apiPackage=api,modelPackage=model,supportsES6=true"
   },
   "repository": {
     "type": "git",
