@@ -1,6 +1,5 @@
 .gitignore
 .npmignore
-.openapi-generator-ignore
 api.ts
 api/global-customer-api.ts
 api/module-sspr-api.ts

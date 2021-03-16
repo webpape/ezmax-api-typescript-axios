@@ -113,7 +113,7 @@ export class Configuration {
      * @param string $secret for signing requests
      * @return this
      */
-    public setSecret(secret) {
+    public setSecret(secret: string) {
         this.secret = secret
         return this
     }
