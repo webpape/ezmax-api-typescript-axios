@@ -1,6 +1,5 @@
 import sha256 from 'crypto-js/sha256';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
-import Base64 from 'crypto-js/enc-base64';
   
 export interface IFingerprintData {
   authorization: string
@@ -28,14 +27,13 @@ export interface IHeadersData {
 export class RequestSignature {
   public static getFingerprint(fingerprintData: IFingerprintData): string {
     const contentToHash = `${fingerprintData.method}\n${fingerprintData.url}\n${fingerprintData.body}\n${fingerprintData.authorization}\n${fingerprintData.date}`
-    const output = Base64.stringify(sha256(contentToHash))
+    const output = sha256(contentToHash).toString()
     return 'v1=' + output
   }
 
   public static getSignature(signatureData: ISignatureData): string {
     const contentToSign = `${signatureData.fingerprint}${signatureData.authorization}${signatureData.date}`
-
-    const output = Base64.stringify(hmacSHA256(contentToSign, signatureData.secret));
+    const output = hmacSHA256(contentToSign, signatureData.secret).toString();
 
     return 'v1=' + output
   }
