@@ -1,4 +1,0 @@
-files:
-    ._request-signature.ts:
-        folder: api
-        destinationFilename: request-signature.ts

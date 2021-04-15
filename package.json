@@ -1,29 +1,29 @@
 {
   "name": "@webpape/ezmax-api-typescript-axios",
   "version": "1.0.39",
-  "description": "Generated eZmax API with OpenAPI and Typescript/Axios module",
-  "main": "index.ts",
+  "description": "OpenAPI client for @ezmaxinc/ezmax-sdk-typescript-axios",
+  "author": "OpenAPI-Generator Contributors",
+  "keywords": [
+    "axios",
+    "typescript",
+    "openapi-client",
+    "openapi-generator",
+    "@ezmaxinc/ezmax-sdk-typescript-axios"
+  ],
+  "license": "Unlicense",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "npm run build"
+  },
   "dependencies": {
-    "crypto-js": "^4.0.0",
-    "node-forge": "^0.10.0"
+    "axios": "^0.21.1",
+    "crypto-js": "^4.0.0"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.2.2",
+    "@types/node": "^12.11.5",
     "@types/crypto-js": "^4.0.1",
-    "@types/node-forge": "^0.9.7"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gen": "openapi-generator-cli generate -g typescript-axios -t templates -o lib -i ezmax-api-definition.json -c templates/._config.yaml --enable-post-process-file --additional-properties=withSeparateModelsAndApi=true,apiPackage=api,enumPropertyNaming=original,modelPackage=model,supportsES6=true"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/webpape/ezmax-api-typescript-axios.git"
-  },
-  "author": "papeweb",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/webpape/ezmax-api-typescript-axios/issues"
-  },
-  "homepage": "https://github.com/webpape/ezmax-api-typescript-axios#readme"
+    "typescript": "^4.2.2"
+  }
 }
