@@ -78,19 +78,19 @@ export class RequiredError extends Error {
  * @class ModelSchema
  */
 export class ModelSchema {
-    schemaObj = {}
+    schema:any = {}
 
     create() {
-        return Joi.object(this.schemaObj)
+        return Joi.object(this.schema)
     }
     get(key: string) {
-        return this.schemaObj[key]
+        return this.schema[key]
     }
     attempt(key:string, value:any) {
-        return Joi.attempt(value, this.schemaObj[key])
+        return Joi.attempt(value, this.schema[key])
     }
     assert(key:string, value:any) {
-        return Joi.assert(value, this.schemaObj[key])
+        return Joi.assert(value, this.schema[key])
     }
     validate(data:any) {
         const schema = this.create()
